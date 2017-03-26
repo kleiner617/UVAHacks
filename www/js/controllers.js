@@ -1,14 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('HomeCtrl', function($scope, auth, store, $state, Favorites) {
-  $scope.logout = function() {
-    auth.signout();
-    store.remove('token');
-    store.remove('profile');
-    store.remove('refreshToken');
-    store.remove('firebaseToken');
-    $state.go('login', {});
-  }
+
 
   $scope.test = function(){
     console.log("TESTING!");
@@ -49,10 +42,17 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, auth, store, $state) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('SettingsCtrl', function($scope, auth, store, $state) {
+
+  $scope.logout = function() {
+    auth.signout();
+    store.remove('token');
+    store.remove('profile');
+    store.remove('refreshToken');
+    store.remove('firebaseToken');
+    $state.go('login', {});
+  }
+
 })
 
 .controller("LoginCtrl", function LoginCtrl($scope, auth, $state, store) {

@@ -116,12 +116,12 @@ angular.module('starter', [
       }
     })
 
-  .state('tab.account', {
+  .state('tab.settings', {
     url: '/settings',
     views: {
-      'tab-account': {
+      'tab-settings': {
         templateUrl: 'templates/tab-settings.html',
-        controller: 'AccountCtrl'
+        controller: 'SettingsCtrl'
       }
     },
     data: {
