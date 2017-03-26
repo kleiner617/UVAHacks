@@ -49,8 +49,57 @@ angular.module('starter.services', ['firebase'])
   };
 })
 
-.service('Favorites', function($firebaseArray, store, $state) {
+.service('Favorites', function($firebaseArray, store, $state, auth) {
   var name = "Favorites";
+
+  var ref = new Firebase("https://auth0-ionic-sample.firebaseio.com/" + name);
+  // ref.authWithCustomToken(store.get('firebaseToken'), function(error, auth) {
+  //   if (error) {
+  //     // There was an error logging in, redirect the user to login page
+  //     debugger;
+  //     $state.go('login');
+  //   }
+  // });
+
+  // var ref = new firebaseAuth("https://auth0-ionic-sample.firebaseio.com");
+  // ref.authWithPassword({
+  //   "email": 'wunschelbs@vcu.edi',
+  //   "password": 'password1'
+  // }, function(error, auth) {
+  //   if (error) {
+  //     // There was an error logging in, redirect the user to login page
+  //     debugger;
+  //     $state.go('login');
+  //   }
+  // });
+
+  var friends = $firebaseArray(ref);
+
+  this.all = function() {
+    return friends;
+  };
+
+  this.add = function(friend) {
+    friend.user = auth.idToken;
+    friends.$add(friend);
+  };
+
+  this.get = function(id) {
+    return friends.$getRecord(id);
+  };
+
+  this.save = function(friend) {
+    friends.$save(friend);
+  };
+
+  this.delete = function(friend) {
+    friends.$remove(friend);
+  };
+
+})
+
+.service('Routes', function($firebaseArray, store, $state, auth, $cordovaGeolocation) {
+  var name = "Routes";
 
   var ref = new Firebase("https://auth0-ionic-sample.firebaseio.com/" + name);
   // ref.authWithCustomToken(store.get('firebaseToken'), function(error, auth) {
@@ -95,6 +144,51 @@ angular.module('starter.services', ['firebase'])
     friends.$remove(friend);
   };
 
-})
 
+  var timeout = null;
+  var route = null;
+  var startDate = null;
+  var onRoute = false;
+  var routeName = null;
+  var geoLocOptions = {timeout: 10000, enableHighAccuracy: false};
+  this.start = function(name){
+    routeName = name;
+    onRoute = true;
+    route = [];
+    startDate = new Date();
+    (function loop(){
+      $cordovaGeolocation.getCurrentPosition(geoLocOptions).then(function(position){
+        route.push({
+          timestamp: position.timestamp, 
+          coords: {
+            altitude: position.coords.altitude,
+            altitudeAccuracy: position.coords.altitudeAccuracy,
+            heading: position.coords.heading,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            speed: position.coords.speed,
+          }});
+        if(onRoute)
+          timeout = setTimeout(loop, 1000);
+      }, function(error){
+        console.log('Could not get location');
+      });
+    })();
+  }
+
+  this.stop = function(name){
+    onRoute = false;
+    routeName = routeName || "";
+    clearTimeout(timeout);
+    this.add({
+      name: routeName,
+      user: auth.idToken,
+      start: startDate.toISOString(),
+      end: (new Date()).toISOString(),
+      route: JSON.stringify(route)
+    });
+    routeName = null;//clear old name
+  }
+
+})
 ;

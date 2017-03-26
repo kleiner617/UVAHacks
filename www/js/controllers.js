@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function($scope, auth, store, $state, Favorites) {
+.controller('HomeCtrl', function($scope, auth, store, $state, Favorites, Routes) {
   $scope.logout = function() {
     auth.signout();
     store.remove('token');
@@ -26,7 +26,13 @@ angular.module('starter.controllers', [])
       console.log(Favorites.get(tmp[0].$id));
       Favorites.delete(tmp[0]);
     }
+  }
 
+  $scope.start = function(){
+    Routes.start();
+  }
+  $scope.stop = function(){
+    Routes.stop();
   }
 })
 
