@@ -147,18 +147,21 @@ angular.module('starter.services', ['firebase'])
 
   var timeout = null;
   var route = null;
-  var startDate = null;
   var onRoute = false;
-  var routeName = null;
   var geoLocOptions = {timeout: 10000, enableHighAccuracy: false};
-  this.start = function(name){
-    routeName = name;
+  this.start = function(onUpdate){
+    onUpdate = onUpdate || function(){};
     onRoute = true;
-    route = [];
-    startDate = new Date();
+    route = {
+      name: "",
+      user: auth.idToken,
+      start: (new Date()).toISOString(),
+      end: null,
+      route: []
+    };
     (function loop(){
       $cordovaGeolocation.getCurrentPosition(geoLocOptions).then(function(position){
-        route.push({
+        var tmp = {
           timestamp: position.timestamp, 
           coords: {
             altitude: position.coords.altitude,
@@ -167,7 +170,9 @@ angular.module('starter.services', ['firebase'])
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
             speed: position.coords.speed,
-          }});
+          }}
+        route.route.push(tmp);
+        onUpdate(tmp);
         if(onRoute)
           timeout = setTimeout(loop, 1000);
       }, function(error){
@@ -175,18 +180,19 @@ angular.module('starter.services', ['firebase'])
       });
     })();
   }
-
+  this.nameRoute = function(name){
+    route.name = name || "";
+  }
+  this.getCurrentRoute = function(){
+    return route;
+  }
   this.stop = function(name){
     onRoute = false;
-    routeName = routeName || "";
     clearTimeout(timeout);
-    this.add({
-      name: routeName,
-      user: auth.idToken,
-      start: startDate.toISOString(),
-      end: (new Date()).toISOString(),
-      route: JSON.stringify(route)
-    });
+    route.name = name || "";
+    route.route = JSON.stringify(route);
+    route.end = (new Date()).toISOString();
+    this.add(route);
     routeName = null;//clear old name
   }
 
