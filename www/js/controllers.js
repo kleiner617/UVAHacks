@@ -32,12 +32,12 @@ angular.module('starter.controllers', [])
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
-    var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
+    var startLatLng = new google.maps.LatLng(43.07493,-89.381388);
 
     var mapOptions = {
-      center: myLatlng,
+      center: startLatLng,
       zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: 'hybrid'
     };
 
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
