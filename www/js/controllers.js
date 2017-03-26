@@ -95,6 +95,8 @@ angular.module('starter.controllers', [])
 
 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+  $scope.showNotificationPane = false;
+  $scope.mapHalf = "100%";
   var options = {timeout: 10000, enableHighAccuracy: false};
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
@@ -112,4 +114,22 @@ angular.module('starter.controllers', [])
   }, function(error){
     console.log('Could not get location');
   });
+
+  $scope.showNotification = function(){
+  $scope.mapHalf = "50%";
+    $scope.showNotificationPane = true;
+  }
+  $scope.hideNotification = function(){
+  $scope.mapHalf = "100%";
+    $scope.showNotificationPane = false;
+  }
+  $scope.notiStyle = function() {
+  var style1 = "width: 100%; height: 100%;";
+  var style2 = "height: 50%; width: 100%;";
+  if(!$scope.showNotificationPane)
+     return style1;
+  else
+     return style2;
+}
+
 });

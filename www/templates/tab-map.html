@@ -1,5 +1,9 @@
 <ion-view>
   <ion-content>
-    <div id="map" data-tap-disabled="true"></div>
+  	<div id="mapHalf" style="/*height: 50%;*/ width: 100%;" ng-style="{height: mapHalf}">
+	    <div id="map" data-tap-disabled="true"></div>
+  	</div>
+  	<div id="notHalf" style="height: 50%; width:100%;" ng-show="showNotificationPane"></div>
+  	<button ng-click="showNotification()">PUSH ME</button>
   </ion-content>
 </ion-view>
