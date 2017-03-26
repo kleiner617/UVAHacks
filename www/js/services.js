@@ -162,7 +162,7 @@ angular.module('starter.services', ['firebase'])
     (function loop(){
       $cordovaGeolocation.getCurrentPosition(geoLocOptions).then(function(position){
         var tmp = {
-          timestamp: position.timestamp, 
+          timestamp: position.timestamp,
           coords: {
             altitude: position.coords.altitude,
             altitudeAccuracy: position.coords.altitudeAccuracy,
