@@ -116,4 +116,35 @@ angular.module('starter', [
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/home');
 
-});
+  jwtInterceptorProvider.tokenGetter = function(store, jwtHelper, auth) {
+    var idToken = store.get('token');
+    var refreshToken = store.get('refreshToken');
+    if (!idToken || !refreshToken) {
+      return null;
+    }
+    if (jwtHelper.isTokenExpired(idToken)) {
+      return auth.refreshIdToken(refreshToken).then(function(idToken) {
+        store.set('token', idToken);
+        return idToken;
+      });
+    } else {
+      return idToken;
+    }
+  }
+
+  $httpProvider.interceptors.push('jwtInterceptor');
+})
+
+.run(function($rootScope, auth, store) {
+  $rootScope.$on('$locationChangeStart', function() {
+    if (!auth.isAuthenticated) {
+      var token = store.get('token');
+      if (token) {
+        auth.authenticate(store.get('profile'), token);
+      }
+    }
+
+  });
+})
+
+;

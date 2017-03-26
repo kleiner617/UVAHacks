@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['firebase'])
 
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
@@ -47,4 +47,54 @@ angular.module('starter.services', [])
       return null;
     }
   };
-});
+})
+
+.service('Favorites', function($firebaseArray, store, $state) {
+  var name = "Favorites";
+
+  var ref = new Firebase("https://auth0-ionic-sample.firebaseio.com/" + name);
+  // ref.authWithCustomToken(store.get('firebaseToken'), function(error, auth) {
+  //   if (error) {
+  //     // There was an error logging in, redirect the user to login page
+  //     debugger;
+  //     $state.go('login');
+  //   }
+  // });
+
+  // var ref = new firebaseAuth("https://auth0-ionic-sample.firebaseio.com");
+  // ref.authWithPassword({
+  //   "email": 'wunschelbs@vcu.edi',
+  //   "password": 'password1'
+  // }, function(error, auth) {
+  //   if (error) {
+  //     // There was an error logging in, redirect the user to login page
+  //     debugger;
+  //     $state.go('login');
+  //   }
+  // });
+
+  var friends = $firebaseArray(ref);
+
+  this.all = function() {
+    return friends;
+  };
+
+  this.add = function(friend) {
+    friends.$add(friend);
+  };
+
+  this.get = function(id) {
+    return friends.$getRecord(id);
+  };
+
+  this.save = function(friend) {
+    friends.$save(friend);
+  };
+
+  this.delete = function(friend) {
+    friends.$remove(friend);
+  };
+
+})
+
+;

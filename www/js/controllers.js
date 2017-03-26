@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, auth, store, $state) {
+.controller('DashCtrl', function($scope, auth, store, $state, Favorites) {
   $scope.logout = function() {
     auth.signout();
     store.remove('token');
@@ -8,6 +8,25 @@ angular.module('starter.controllers', [])
     store.remove('refreshToken');
     store.remove('firebaseToken');
     $state.go('login', {});
+  }
+
+  $scope.test = function(){
+    console.log("TESTING!");
+    Favorites.add({
+      name: "The cool place", 
+      description: "with the awesome stuff", 
+      location:"666 Haven Drive, Richmond VA 23234", 
+      categories: ["cool", 'great', 'awesome']
+    });
+    var tmp = Favorites.all();
+    console.log(tmp);
+    if(tmp.length > 0){
+      tmp[0].name = "BOO!";
+      Favorites.save(tmp[0]);
+      console.log(Favorites.get(tmp[0].$id));
+      Favorites.delete(tmp[0]);
+    }
+
   }
 })
 
