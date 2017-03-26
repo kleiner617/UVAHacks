@@ -95,7 +95,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, Routes) {
 
   var testz = {'A': [38.037512,-78.515489, 'how you', 'how many yums'], 'B': [38.030211,-78.514395, 'chums', 'i eat all the yums'], 'C': [38.044171,-78.464699, 'taco tuesday', 'bring on the yums!'], 'D': [38.027574,-78.506327, 'jumbo', 'ony after rain']}
   $scope.routes = Routes;

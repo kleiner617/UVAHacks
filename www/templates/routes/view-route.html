@@ -4,15 +4,15 @@
     <ion-list>
       <ion-item>
         <span class="input-label">Date of Roadtrip</span>
-        <span class="input-label">{{selectedRoute.date}}</span>
+        <span class="input-label">{{formatDate(selectedRoute.start)}}</span>
       </ion-item>
-      <ion-item>
+     <!--  <ion-item>
         <span class="input-label">Number of Miles</span>
         <span class="input-label">{{selectedRoute.numMiles}}</span>
-      </ion-item>
+      </ion-item> -->
       <ion-item>
         <span class="input-label">Trip Time</span>
-        <span class="input-label">{{selectedRoute.time}}</span>
+        <span class="input-label">{{tripTime(selectedRoute.start, selectedRoute.end)}}m</span>
       </ion-item>
     </ion-list>
 

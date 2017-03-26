@@ -4,7 +4,7 @@
 
     <ion-list>
       <ion-item ng-repeat="route in routes" ng-click="openModal(route)">
-          Road Trip: {{ route.date }}
+          Road Trip: {{formatDate(route.start)}}
         <ion-option-button class="button-positive ion-edit" ng-click="openModal(route)"></ion-option-button>
         <ion-option-button class="button-assertive ion-trash-b" ng-click="deleteItem(route)" ></ion-option-button>
       </ion-item>
