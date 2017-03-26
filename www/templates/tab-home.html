@@ -1,4 +1,4 @@
-<ion-view title="Friends">
+<ion-view title=Home>
   <ion-nav-buttons side="right">
     <button class="button button-clear button-positive" ng-click="showAddFriend()">
       Add
@@ -6,10 +6,10 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
 
-    <button ion-button full>Start a Trip</button>
-    <button ion-button full>Add Roadside Attraction!</button>
+    <button class="button button-block button-positive" ng-click="startTrip()">Start a trip</button>
+    <button class="button button-block button-balanced" ui-sref="tab.favorites">Add Roadside Attraction</button>
     <input type="submit" ng-click="logout()" value="Log out" />
     <input type="submit" ng-click="test()" value="TEST" />
-
+    <input type="submit" ng-click="stop()" value="stop" />
   </ion-content>
 </ion-view>

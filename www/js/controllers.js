@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function($scope, auth, store, $state, Favorites) {
+.controller('HomeCtrl', function($scope, auth, store, $state, Favorites, Routes) {
   $scope.logout = function() {
     auth.signout();
     store.remove('token');
@@ -26,7 +26,14 @@ angular.module('starter.controllers', [])
       console.log(Favorites.get(tmp[0].$id));
       Favorites.delete(tmp[0]);
     }
+  }
 
+  $scope.startTrip = function(){
+    Routes.start();
+    $state.go('tab.map', {});
+  }
+  $scope.stop = function(){
+    Routes.stop();
   }
 })
 
@@ -49,10 +56,17 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, auth, store, $state) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('SettingsCtrl', function($scope, auth, store, $state) {
+
+  $scope.logout = function() {
+    auth.signout();
+    store.remove('token');
+    store.remove('profile');
+    store.remove('refreshToken');
+    store.remove('firebaseToken');
+    $state.go('login', {});
+  }
+
 })
 
 .controller("LoginCtrl", function LoginCtrl($scope, auth, $state, store) {
@@ -84,7 +98,9 @@ angular.module('starter.controllers', [])
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
 
   var testz = {'A': [38.037512,-78.515489, 'how you', 'how many yums'], 'B': [38.030211,-78.514395, 'chums', 'i eat all the yums'], 'C': [38.044171,-78.464699, 'taco tuesday', 'bring on the yums!'], 'D': [38.027574,-78.506327, 'jumbo', 'ony after rain']}
-
+  $scope.routes = Routes;
+  $scope.showNotificationPane = false;
+  $scope.mapHalf = "100%";
   var options = {timeout: 10000, enableHighAccuracy: false};
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
@@ -146,4 +162,22 @@ angular.module('starter.controllers', [])
   }, function(error){
     console.log('Unable to grab user location.');
   });
+
+  $scope.showNotification = function(){
+  $scope.mapHalf = "50%";
+    $scope.showNotificationPane = true;
+  }
+  $scope.hideNotification = function(){
+  $scope.mapHalf = "100%";
+    $scope.showNotificationPane = false;
+  }
+  $scope.notiStyle = function() {
+  var style1 = "width: 100%; height: 100%;";
+  var style2 = "height: 50%; width: 100%;";
+  if(!$scope.showNotificationPane)
+     return style1;
+  else
+     return style2;
+}
+
 });
