@@ -49,7 +49,7 @@ angular.module('starter.services', ['firebase'])
   };
 })
 
-.service('Favorites', function($firebaseArray, store, $state, auth) {
+.service('Favorites', function($firebaseArray, store, $state, auth, $cordovaGeolocation) {
   var name = "Favorites";
 
   var ref = new Firebase("https://uvahacks.firebaseio.com/" + name);
@@ -80,8 +80,16 @@ angular.module('starter.services', ['firebase'])
   };
 
   this.add = function(friend) {
-    friend.user = auth.idToken;
-    friends.$add(friend);
+    var options = {timeout: 10000, enableHighAccuracy: false};
+    $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+      friend.Lat = position.coords.latitude;
+      friend.Lng = position.coords.longitude;
+      friend.user = auth.idToken;
+      friend.streetAddr = friend.location;
+      friends.$add(friend);
+    }, function(error){
+      console.log('Unable to grab user location.');
+    });
   };
 
   this.get = function(id) {
