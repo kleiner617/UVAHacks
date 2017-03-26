@@ -1,0 +1,21 @@
+<ion-view title="Favorites">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear button-positive" ng-click="openModal()">
+      Add Favorites
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content class="has-header">
+
+    <ion-list>
+      <ion-item ng-repeat="favorite in favorites" ng-click="openModal2(favorite)">
+        {{ favorite.name }}
+        <ion-option-button class="button-positive ion-edit" ng-click="openModal()"></ion-option-button>
+        <ion-option-button class="button-assertive ion-trash-b" ng-click="deleteItem(favorite)" ></ion-option-button>
+      </ion-item>
+    </ion-list>
+
+
+  </ion-content>
+</ion-view>
+

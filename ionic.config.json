@@ -1,4 +1,5 @@
 {
   "name": "uvaHacks",
-  "app_id": ""
+  "app_id": "",
+  "ionicServeAddress": "localhost"
 }

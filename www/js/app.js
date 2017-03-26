@@ -6,8 +6,8 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', [
-  'ionic', 
-  'starter.controllers', 
+  'ionic',
+  'starter.controllers',
   'starter.services',
   'auth0',
   'angular-storage',
@@ -56,25 +56,33 @@ angular.module('starter', [
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
+  .state('tab.home', {
     url: '/home',
     views: {
       'tab-home': {
         templateUrl: 'templates/tab-home.html',
-        controller: 'DashCtrl'
+        controller: 'HomeCtrl'
       }
     },
     data: {
         requiresLogin: true
       }
   })
-
-  .state('tab.chats', {
+    .state('tab.favorites', {
+      url: '/favorites',
+      views: {
+        'tab-favorites': {
+          templateUrl: 'templates/favorites/tab-favorites.html',
+          controller: 'FavoritesCtrl'
+        }
+      }
+    })
+    .state('tab.map', {
       url: '/map',
       views: {
         'tab-map': {
           templateUrl: 'templates/tab-map.html',
-          controller: 'ChatsCtrl'
+          controller: 'MapCtrl'
         }
       },
       data: {
@@ -101,7 +109,7 @@ angular.module('starter', [
         templateUrl: 'templates/tab-settings.html',
         controller: 'AccountCtrl'
       }
-    }, 
+    },
     data: {
         requiresLogin: true
       }

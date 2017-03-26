@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, auth, store, $state, Favorites) {
+.controller('HomeCtrl', function($scope, auth, store, $state, Favorites) {
   $scope.logout = function() {
     auth.signout();
     store.remove('token');
@@ -13,9 +13,9 @@ angular.module('starter.controllers', [])
   $scope.test = function(){
     console.log("TESTING!");
     Favorites.add({
-      name: "The cool place", 
-      description: "with the awesome stuff", 
-      location:"666 Haven Drive, Richmond VA 23234", 
+      name: "The cool place",
+      description: "with the awesome stuff",
+      location:"666 Haven Drive, Richmond VA 23234",
       categories: ["cool", 'great', 'awesome']
     });
     var tmp = Favorites.all();
@@ -70,7 +70,7 @@ angular.module('starter.controllers', [])
         api: 'firebase'
       }).then(function(delegation) {
         store.set('firebaseToken', delegation.id_token);
-        $state.go('tab.dash');
+        $state.go('tab.home');
       }, function(error) {
         // Error getting the firebase token
       })
