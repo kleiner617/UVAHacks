@@ -1,5 +1,6 @@
 {
   "name": "uvaHacks",
   "app_id": "",
-  "ionicServeAddress": "localhost"
+  "ionicServeAddress": "localhost",
+  "gulpStartupTasks": ["sass", "watch"]
 }

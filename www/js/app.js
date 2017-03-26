@@ -68,6 +68,7 @@ angular.module('starter', [
         requiresLogin: true
       }
   })
+
     .state('tab.favorites', {
       url: '/favorites',
       views: {
@@ -77,7 +78,8 @@ angular.module('starter', [
         }
       }
     })
-    .state('tab.map', {
+
+  .state('tab.map', {
       url: '/map',
       views: {
         'tab-map': {

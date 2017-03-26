@@ -80,4 +80,23 @@ angular.module('starter.controllers', [])
   })();
 })
 
-;
+
+.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+  var options = {timeout: 10000, enableHighAccuracy: false};
+
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+
+    var startLatLng = new google.maps.LatLng(43.07493,-89.381388);
+
+    var mapOptions = {
+      center: startLatLng,
+      zoom: 15,
+      mapTypeId: 'hybrid'
+    };
+
+    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+  }, function(error){
+    console.log('Could not get location');
+  });
+});
