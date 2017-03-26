@@ -25,4 +25,24 @@ angular.module('starter.controllers', [])
   $scope.settings = {
     enableFriends: true
   };
+})
+
+.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+  var options = {timeout: 10000, enableHighAccuracy: false};
+
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+
+    var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
+
+    var mapOptions = {
+      center: myLatlng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+  }, function(error){
+    console.log('Could not get location');
+  });
 });
