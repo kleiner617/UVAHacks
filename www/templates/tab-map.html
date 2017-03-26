@@ -2,8 +2,15 @@
   <ion-content>
   	<div id="mapHalf" style="/*height: 50%;*/ width: 100%;" ng-style="{height: mapHalf}">
 	    <div id="map" data-tap-disabled="true"></div>
+  		<button class="button button-assertive" 
+  		style="position:relative; top: -53px; width: 50%; left:25%;" 
+  		ng-show="routes.active()" ng-click="routes.stop()">
+		  End Trip
+		</button>
   	</div>
-  	<div id="notHalf" style="height: 50%; width:100%;" ng-show="showNotificationPane"></div>
+  	<div id="notHalf" style="height: 50%; width:100%;" ng-show="showNotificationPane">
+  		<i class="ion-chevron-down" style="position: relative; top: 1%; left: 5%;" ng-click="hideNotification()"></i>
+  	</div>
   	<button ng-click="showNotification()">PUSH ME</button>
   </ion-content>
 </ion-view>

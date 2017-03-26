@@ -174,7 +174,7 @@ angular.module('starter.services', ['firebase'])
         route.route.push(tmp);
         onUpdate(tmp);
         if(onRoute)
-          timeout = setTimeout(loop, 1000);
+          timeout = setTimeout(loop, 500);
       }, function(error){
         console.log('Could not get location');
       });
@@ -186,6 +186,7 @@ angular.module('starter.services', ['firebase'])
   this.getCurrentRoute = function(){
     return route;
   }
+  this.test = true;
   this.stop = function(name){
     onRoute = false;
     clearTimeout(timeout);
@@ -194,6 +195,9 @@ angular.module('starter.services', ['firebase'])
     route.end = (new Date()).toISOString();
     this.add(route);
     routeName = null;//clear old name
+  }
+  this.active = function(){
+    return onRoute;
   }
 
 })

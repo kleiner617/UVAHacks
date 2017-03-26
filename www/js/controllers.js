@@ -28,8 +28,9 @@ angular.module('starter.controllers', [])
     }
   }
 
-  $scope.start = function(){
+  $scope.startTrip = function(){
     Routes.start();
+    $state.go('tab.map', {});
   }
   $scope.stop = function(){
     Routes.stop();
@@ -94,7 +95,8 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+.controller('MapCtrl', function($scope, $state, $cordovaGeolocation,Routes) {
+  $scope.routes = Routes;
   $scope.showNotificationPane = false;
   $scope.mapHalf = "100%";
   var options = {timeout: 10000, enableHighAccuracy: false};
