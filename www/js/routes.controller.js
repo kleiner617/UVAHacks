@@ -6,19 +6,10 @@
  */
 angular.module('starter.controllers')
 
-  .controller('RoutesCtrl', function($scope, $ionicModal, $cordovaGeolocation, Favorites) {
-
-    //TOOD: Need to get actual favorites from database!
+  .controller('RoutesCtrl', function($scope, $ionicModal, $cordovaGeolocation, Favorites, Routes) {
 
 
-    $scope.routes= [{numStops: "Place 1", date: "This is the description!", numMiles: "Place 1", time: ["Food", "Historical Landmark"]},
-      {numStops: "Place 2", date: "This is the description!", numMiles: "Location 2", time: ["Food", "Historical Landmark"]},
-      {numStops: "Place 3", date: "This is the description!", numMiles: "Location 3", time: ["Food", "Historical Landmark"]},
-      {numStops: "Place 4", date: "This is the description!", numMiles: "Location 4", time: ["Food", "Historical Landmark"]},
-      {numStops: "Place 5", date: "This is the description!", numMiles: "Location 5", time: ["Food", "Historical Landmark"]},
-      {numStops: "Place 6", date: "This is the description!", numMiles: "Place 6", time: ["Food", "Historical Landmark"]}];
-
-    // $scope.routes = Favorites.all();
+    $scope.routes= Routes.all();
 
     $scope.selectedRoute={};
 

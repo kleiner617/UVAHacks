@@ -78,20 +78,36 @@ angular.module('starter.controllers')
         $scope.viewModal.remove();
         $scope.newModal.remove();
       });
-      $scope.input={};
+      $scope.input = {
+        'name' : '',
+        'description' : '',
+        'location' : '',
+        'categories' : []
+      };
     }
 
     $scope.saveInput = function(){
       //TODO: get categories as well to save!
 
+      console.log($scope.input.location);
+      var name = $scope.input.name
+      var description = $scope.input.description
+      var actualLocation = "";
+      if ($scope.currentLocation != ""){
+        actualLocation = $scope.currentLocation;
+      }
+      else
+        actualLocation = $scope.input.location;
+
+      $scope.closeModal(1);
+
       Favorites.add({
-        name: $scope.input.name,
-        description: $scope.input.description,
-        location: $scope.input.location,
+        name: name,
+        description: description,
+        location: actualLocation,
         categories: ["cool", 'great', 'awesome']
       });
-      $scope.closeModal();
-      $scope.currentLocation = "THIS IS LOCATION!";
+
 
     }
 

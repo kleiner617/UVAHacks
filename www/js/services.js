@@ -52,7 +52,7 @@ angular.module('starter.services', ['firebase'])
 .service('Favorites', function($firebaseArray, store, $state, auth) {
   var name = "Favorites";
 
-  var ref = new Firebase("https://auth0-ionic-sample.firebaseio.com/" + name);
+  var ref = new Firebase("https://uvahacks.firebaseio.com/" + name);
   // ref.authWithCustomToken(store.get('firebaseToken'), function(error, auth) {
   //   if (error) {
   //     // There was an error logging in, redirect the user to login page
@@ -101,7 +101,7 @@ angular.module('starter.services', ['firebase'])
 .service('Routes', function($firebaseArray, store, $state, auth, $cordovaGeolocation) {
   var name = "Routes";
 
-  var ref = new Firebase("https://auth0-ionic-sample.firebaseio.com/" + name);
+  var ref = new Firebase("https://uvahacks.firebaseio.com/" + name);
   // ref.authWithCustomToken(store.get('firebaseToken'), function(error, auth) {
   //   if (error) {
   //     // There was an error logging in, redirect the user to login page
@@ -162,7 +162,7 @@ angular.module('starter.services', ['firebase'])
     (function loop(){
       $cordovaGeolocation.getCurrentPosition(geoLocOptions).then(function(position){
         var tmp = {
-          timestamp: position.timestamp, 
+          timestamp: position.timestamp,
           coords: {
             altitude: position.coords.altitude,
             altitudeAccuracy: position.coords.altitudeAccuracy,
@@ -191,7 +191,7 @@ angular.module('starter.services', ['firebase'])
     onRoute = false;
     clearTimeout(timeout);
     route.name = name || "";
-    route.route = JSON.stringify(route);
+    route.route = JSON.stringify(route.route);
     route.end = (new Date()).toISOString();
     this.add(route);
     routeName = null;//clear old name
