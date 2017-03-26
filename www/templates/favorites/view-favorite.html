@@ -3,17 +3,19 @@
   <ion-content>
       <ion-list>
         <ion-item>
-          <span class="input-label">{{selectedFav.name}}</span>
+          <span class="input-label">Name</span>
+          <span>{{selectedFav.name}}</span>
         </ion-item>
         <ion-item>
-          <span class="input-label">{{selectedFav.location}}</span>
+          <span class="input-label">Address</span>
+          <span>{{selectedFav.location}}</span>
         </ion-item>
         <ion-item>
-          <span class="input-label">{{selectedFav.description}}</span>
+          <span class="input-label">Description:</span>
+          <span>{{selectedFav.description}}</span>
         </ion-item>
       </ion-list>
 
-    <button class="button button-calm" ng-click="saveInput()"> Save </button>
     <button class="button button-assertive" ng-click="closeModal(2)">Close</button>
 
   </ion-content>

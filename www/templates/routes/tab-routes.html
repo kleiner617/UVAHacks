@@ -1,0 +1,16 @@
+<ion-view title="Routes">
+
+  <ion-content class="has-header">
+
+    <ion-list>
+      <ion-item ng-repeat="route in routes" ng-click="openModal(route)">
+          Road Trip: {{ route.date }}
+        <ion-option-button class="button-positive ion-edit" ng-click="openModal(route)"></ion-option-button>
+        <ion-option-button class="button-assertive ion-trash-b" ng-click="deleteItem(route)" ></ion-option-button>
+      </ion-item>
+    </ion-list>
+
+
+  </ion-content>
+</ion-view>
+
