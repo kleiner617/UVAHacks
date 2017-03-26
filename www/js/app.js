@@ -5,7 +5,14 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 
+  'starter.controllers', 
+  'starter.services',
+  'auth0',
+  'angular-storage',
+  'angular-jwt',
+  'firebase'
+  ])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -23,7 +30,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, authProvider, $httpProvider, jwtInterceptorProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -31,11 +38,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+   .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl',
+    cache: false,
+  })
+
   // setup an abstract state for the tabs directive
     .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/tabs.html',
   })
 
   // Each tab has its own nav history stack:
@@ -47,7 +61,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         templateUrl: 'templates/tab-home.html',
         controller: 'DashCtrl'
       }
-    }
+    },
+    data: {
+        requiresLogin: true
+      }
   })
 
   .state('tab.chats', {
@@ -57,6 +74,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           templateUrl: 'templates/tab-map.html',
           controller: 'ChatsCtrl'
         }
+      },
+      data: {
+        requiresLogin: true
       }
     })
     .state('tab.chat-detail', {
@@ -66,6 +86,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           templateUrl: 'templates/chat-detail.html',
           controller: 'ChatDetailCtrl'
         }
+      },
+      data: {
+        requiresLogin: true
       }
     })
 
@@ -76,10 +99,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         templateUrl: 'templates/tab-settings.html',
         controller: 'AccountCtrl'
       }
-    }
+    }, 
+    data: {
+        requiresLogin: true
+      }
+  });
+
+  authProvider.init({
+    domain: 'uvahack.auth0.com',
+    clientID: 'I6E7NrKa6iEFT1RhGJPKyR82WUN0hQyu',
+    loginState: 'login'
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/home');
 
 });
